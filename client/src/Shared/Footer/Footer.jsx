@@ -8,15 +8,16 @@ const Footer = () => {
       <div className="footer text-white gap-0">
         <aside className="bg-[#1F2937] w-full h-[250px] flex  flex-col justify-center items-center">
           <p className="text-2xl font-bold">Contact US</p>
-          <p>
-            ACME Industries Ltd.
-            <br />
-            Providing reliable tech since 1992
+          <p className="text-center">
+            123 ABS Street, Uni 21, Bangladesh <br />
+            +88 123456789 <br />
+            Mon - Fri: 08:00 - 22:00 <br />
+            Sat - Sun: 10:00 - 23:00
           </p>
         </aside>
 
         <nav className="bg-[#111827]  w-full h-[250px] flex  flex-col justify-center items-center">
-          <h6 className="footer-title">Follow Us</h6>
+          <h6 className="footer-title text-2xl font-bold">Follow Us</h6>
           <p>Follow US on social media</p>
           <div className="grid grid-flow-col  gap-6 pt-3">
             <a>
