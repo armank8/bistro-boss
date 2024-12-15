@@ -9,9 +9,9 @@ export default function Featured() {
     >
       <SectionHeader
         heading={"From our Menu"}
-        headingColor={'text-white'}
+        headingColor={"text-white"}
         subHeading={"Check it out"}
-        className={'bg-black bg-opacity-50 mb-0'}
+        className={"bg-black bg-opacity-50 mb-0"}
       ></SectionHeader>
       <div className="flex items-center text-white  px-40 py-20 space-x-10 bg-black bg-opacity-50">
         <div>
@@ -26,6 +26,9 @@ export default function Featured() {
             Eaque repellat recusandae ad laudantium tempore consequatur
             consequuntur omnis ullam maxime tenetur.
           </p>
+          <button className="btn btn-outline border-none border-b-4 border-b-blue-500 text-white font-bold">
+            Order Now
+          </button>
         </div>
       </div>
     </section>
