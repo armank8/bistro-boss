@@ -4,20 +4,22 @@ import img from "../../../assets/home/featured.jpg";
 export default function Featured() {
   return (
     <section
-      className="bg-fixed w-full mx-0 h-[848px] bg-black pt-1 my-20"
+      className="bg-fixed my-20"
       style={{ backgroundImage: `url(${img})` }}
     >
       <SectionHeader
         heading={"From our Menu"}
+        headingColor={'text-white'}
         subHeading={"Check it out"}
+        className={'bg-black bg-opacity-50 mb-0'}
       ></SectionHeader>
-      <div className="flex text-white px-40 py-20 space-x-10 bg-opacity-30">
+      <div className="flex items-center text-white  px-40 py-20 space-x-10 bg-black bg-opacity-50">
         <div>
-          <img className="w-[648px] h-[400px]" src={img} alt="" />
+          <img className="" src={img} alt="" />
         </div>
         <div>
           <p>March 20, 2023</p>
-          <p>WHERE CAN I GET SOME?</p>
+          <p className="text-2xl font-bold my-5">WHERE CAN I GET SOME?</p>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
             voluptate facere, deserunt dolores maiores quod nobis quas quasi.
