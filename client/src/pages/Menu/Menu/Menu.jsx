@@ -1,9 +1,11 @@
 import { Helmet } from "react-helmet-async";
-import Cover from "../../../Shared/Cover/Cover";
-import banner3 from "../../../assets/menu/banner3.jpg";
-import PopularMenu from "../../Home/PopularMenu/PopularMenu";
 import MenuCategory from "../MenuCategory/MenuCategory";
 import useMenu from "../../../hooks/useMenu";
+import banner3 from "../../../assets/menu/banner3.jpg";
+import dessertBg from "../../../assets/menu/dessert-bg.jpeg";
+import pizzaBg from "../../../assets/menu/pizza-bg.jpg";
+import saladBg from "../../../assets/menu/salad-bg.jpg";
+import soupBg from "../../../assets/menu/soup-bg.jpg";
 
 export default function Menu() {
   const [menus] = useMenu();
@@ -18,8 +20,12 @@ export default function Menu() {
       <Helmet>
         <title>Bistro Boss | Menu</title>
       </Helmet>
-      <Cover img={banner3}></Cover>
-      <MenuCategory items={offered}></MenuCategory>
+      
+      <MenuCategory items={offered} bannerImg={banner3} title={'our menu'}></MenuCategory>
+      <MenuCategory items={dessert} bannerImg={dessertBg} title={'Dessert'}></MenuCategory>
+      <MenuCategory items={pizza} bannerImg={pizzaBg} title={'pizza'}></MenuCategory>
+      <MenuCategory items={salad} bannerImg={saladBg} title={'salad'}></MenuCategory>
+      <MenuCategory items={soup} bannerImg={soupBg} title={'soup'}></MenuCategory>
     </div>
   );
 }
