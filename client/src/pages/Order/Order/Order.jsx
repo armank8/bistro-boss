@@ -6,10 +6,14 @@ import "react-tabs/style/react-tabs.css";
 import useMenu from "../../../hooks/useMenu";
 import FoodCard from "../../../components/FoodCard/FoodCard";
 import OrderTab from "../OrderTab/OrderTab";
+import { useParams } from "react-router-dom";
 
 export default function Order() {
   const [tabIndex, setTabIndex] = useState(0);
   const [menus] = useMenu();
+  const { category } = useParams();
+  console.log(category);
+  
   const offered = menus.filter((item) => item.category === "offered");
   const dessert = menus.filter((item) => item.category === "dessert");
   const pizza = menus.filter((item) => item.category === "pizza");
