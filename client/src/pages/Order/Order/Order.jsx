@@ -4,6 +4,8 @@ import coverImg from "../../../assets/order/banner2.jpg";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import useMenu from "../../../hooks/useMenu";
+import FoodCard from "../../../components/FoodCard/FoodCard";
+import OrderTab from "../OrderTab/OrderTab";
 
 export default function Order() {
   const [tabIndex, setTabIndex] = useState(0);
@@ -13,7 +15,8 @@ export default function Order() {
   const pizza = menus.filter((item) => item.category === "pizza");
   const salad = menus.filter((item) => item.category === "salad");
   const soup = menus.filter((item) => item.category === "soup");
-  
+  const drinks = menus.filter((item) => item.category === "drinks");
+
   return (
     <div>
       <Cover
@@ -33,10 +36,19 @@ export default function Order() {
           </TabList>
 
           <TabPanel>
-            <h2>Any content 1</h2>
+            <OrderTab items={salad}></OrderTab>
           </TabPanel>
           <TabPanel>
-            <h2>Any content 2</h2>
+            <OrderTab items={pizza}></OrderTab>
+          </TabPanel>
+          <TabPanel>
+            <OrderTab items={soup}></OrderTab>
+          </TabPanel>
+          <TabPanel>
+            <OrderTab items={dessert}></OrderTab>
+          </TabPanel>
+          <TabPanel>
+            <OrderTab items={drinks}></OrderTab>
           </TabPanel>
         </Tabs>
       </div>
