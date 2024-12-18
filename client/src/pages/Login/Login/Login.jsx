@@ -23,7 +23,7 @@ export default function Login() {
     const captcha = form.captcha.value;
     console.log(email, pass, captcha);
   };
-  const handleValidateCaptcha = (e) => {
+  const handleValidateCaptcha = () => {
     const user_captcha_value = captchaRef.current.value;
     if (validateCaptcha(user_captcha_value) == true) {
       setDisabled(false);
@@ -54,8 +54,7 @@ export default function Login() {
                 name="email"
                 type="email"
                 placeholder="email"
-                className="input input-bordered"
-                required
+                className="input input-bordered"              
               />
             </div>
             {/* password */}
@@ -67,8 +66,7 @@ export default function Login() {
                 name="password"
                 type="password"
                 placeholder="password"
-                className="input input-bordered"
-                required
+                className="input input-bordered"               
               />
               <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
@@ -78,7 +76,9 @@ export default function Login() {
             </div>
             {/* Captcha */}
             <div className="form-control">
-              <LoadCanvasTemplate />
+              <label className="label">
+                <LoadCanvasTemplate />
+              </label>
               <input
                 ref={captchaRef}
                 name="captcha"
