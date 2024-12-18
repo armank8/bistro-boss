@@ -4,9 +4,9 @@ import Navbar from "../Shared/Navbar/Navbar";
 
 const Main = () => {
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const trackLocation = location.pathname.includes("login");
-  console.log(trackLocation);
+  // console.log(trackLocation);
   return (
     <div>
       {trackLocation || <Navbar></Navbar>}
