@@ -127,7 +127,7 @@ export default function Login() {
               {" "}
               <small>Or Sign in with</small>
             </p>
-            <p className="flex justify-center space-x-6 pt-2">
+            <p className="flex justify-center space-x-6 py-2">
               <FcGoogle />
               <FaFacebook></FaFacebook>
               <FaGithub />
