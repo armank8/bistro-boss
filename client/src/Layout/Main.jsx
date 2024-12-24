@@ -5,7 +5,7 @@ import Navbar from "../Shared/Navbar/Navbar";
 const Main = () => {
   const location = useLocation();
   // console.log(location);
-  const trackLocation = location.pathname.includes("login");
+  const trackLocation = location.pathname.includes("login") || location.pathname.includes("signup");
   // console.log(trackLocation);
   return (
     <div>

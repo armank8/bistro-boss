@@ -6,11 +6,17 @@ import {
   LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [disabled, setDisabled] = useState(true);
   const captchaRef = useRef(null);
+  const { signIn } = useContext(AuthContext);
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -22,6 +28,10 @@ export default function Login() {
     const pass = form.password.value;
     const captcha = form.captcha.value;
     console.log(email, pass, captcha);
+    signIn(email, pass).then((result) => {
+      const user = result.user;
+      console.log(user);
+    });
   };
   const handleValidateCaptcha = () => {
     const user_captcha_value = captchaRef.current.value;
@@ -54,7 +64,7 @@ export default function Login() {
                 name="email"
                 type="email"
                 placeholder="email"
-                className="input input-bordered"              
+                className="input input-bordered"
               />
             </div>
             {/* password */}
@@ -66,7 +76,7 @@ export default function Login() {
                 name="password"
                 type="password"
                 placeholder="password"
-                className="input input-bordered"               
+                className="input input-bordered"
               />
               <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
@@ -104,6 +114,25 @@ export default function Login() {
               />
             </div>
           </form>
+          {/* Bottom Options */}
+          <div className="text-center">
+            <Link to="/signup">
+              <p>
+                <small className="text-yellow-600">
+                  New here? Create a new Account
+                </small>
+              </p>
+            </Link>
+            <p>
+              {" "}
+              <small>Or Sign in with</small>
+            </p>
+            <p className="flex justify-center space-x-6 pt-2">
+              <FcGoogle />
+              <FaFacebook></FaFacebook>
+              <FaGithub />
+            </p>
+          </div>
         </div>
       </div>
     </div>
