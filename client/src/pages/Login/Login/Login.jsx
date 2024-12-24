@@ -4,7 +4,7 @@ import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   LoadCanvasTemplateNoReload,
-  validateCaptcha,
+  validateCaptcha
 } from "react-simple-captcha";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
@@ -21,14 +21,14 @@ export default function Login() {
     loadCaptchaEnginge(6);
   }, []);
 
-  const handleLogin = (event) => {
+  const handleLogin = event => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const pass = form.password.value;
     const captcha = form.captcha.value;
     console.log(email, pass, captcha);
-    signIn(email, pass).then((result) => {
+    signIn(email, pass).then(result => {
       const user = result.user;
       console.log(user);
     });
@@ -124,12 +124,11 @@ export default function Login() {
               </p>
             </Link>
             <p>
-              {" "}
-              <small>Or Sign in with</small>
+              {" "}<small>Or Sign in with</small>
             </p>
             <p className="flex justify-center space-x-6 py-2">
               <FcGoogle />
-              <FaFacebook></FaFacebook>
+              <FaFacebook />
               <FaGithub />
             </p>
           </div>
