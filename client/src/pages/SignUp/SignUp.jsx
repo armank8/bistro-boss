@@ -6,8 +6,10 @@ import authentication2 from "../../assets/others/authentication2.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import { useState } from "react";
 
 export default function SignUp() {
+  const [showPassword,setShowPassword] = useState(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data);
 
@@ -38,11 +40,13 @@ export default function SignUp() {
                 <span className="label-text">Your name</span>
               </label>
               <input
-                {...register("name")}
+                {...register("name", { required: true })}
                 type="text"
                 placeholder="your name"
                 className="input input-bordered"
               />
+              {errors.name &&
+                <span className="text-red-600">Name is Required </span>}
             </div>
             {/* Email */}
             <div className="form-control">
@@ -50,23 +54,40 @@ export default function SignUp() {
                 <span className="label-text">Email</span>
               </label>
               <input
-                {...register("email")}
+                {...register("email", { required: true })}
                 type="email"
                 placeholder="email"
                 className="input input-bordered"
               />
+              {errors.email &&
+                <span className="text-red-600">Email is Required </span>}
             </div>
             {/* Password */}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
+              <div className=" ">
               <input
-                {...register("password")}
-                type="password"
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 12
+                })}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="password"
-                className="input input-bordered"
+                className="input input-bordered w-10/12"
               />
+              {/* Show/Hide Toggler */}
+              <button onClick={()=>setShowPassword(!showPassword)} className="bg-slate-300 py-3 px-1 rounded font-bold">               
+              {showPassword ? 'Hide' : 'Show'} </button>
+              </div>
+              {errors.password?.type === 'required'   &&
+                <span className="text-red-600">password is Required </span>}
+              {errors.password?.type === 'minLength'   &&
+                <span className="text-red-600">Password must be at least 6 characters</span>}
+              {errors.password?.type === 'maxLength'   &&
+                <span className="text-red-600">Password must be less than 12 characters </span>}
             </div>
             {/* Button */}
             <div className="form-control mt-6">
