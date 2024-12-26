@@ -37,11 +37,9 @@ export default function AuthProvider({ children }) {
   // Auth stated changes ---> Manage Users
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        console.log("current User", currentUser);
-        setLoading(false);
-      }
+      setUser(currentUser);
+      console.log("current User", currentUser);
+      setLoading(false);
     });
     return () => {
       return unsubscribe();
@@ -53,7 +51,7 @@ export default function AuthProvider({ children }) {
     loading,
     createUser,
     signIn,
-    logOut
+    logOut,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>
