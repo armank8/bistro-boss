@@ -3,33 +3,44 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Navbar = () => {
-  const {user,logOut} = useContext(AuthContext);
-  const handleLogOut = ()=>{
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogOut = () => {
     logOut()
-    .then(()=>{})
-    .catch(error=>console.log(error))
-  }
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
   const menuOptions = (
     <>
       <li>
         <Link to="/">Home</Link>
       </li>
-    
+
       <li>
         <Link to="/menu">Menu</Link>
       </li>
+
       <li>
         <Link to={`/order/salad`}>Order Food</Link>
       </li>
-      
+
+      <li>
+        <Link to="/secret">Secret</Link>
+      </li>
       {/* <li>
         <Link to="/signup">Signup</Link>
       </li> */}
-      {
-        user ? 
-        <> <button onClick={handleLogOut} className="btn btn-ghost">Logout</button> </> :
-        <li><Link to="/login">Login</Link></li>
-      }
+      {user ? (
+        <>
+          {" "}
+          <button onClick={handleLogOut} className="btn btn-ghost">
+            Logout
+          </button>{" "}
+        </>
+      ) : (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -60,7 +71,9 @@ const Navbar = () => {
               {menuOptions}
             </ul>
           </div>
-          <Link to="/" className="btn btn-ghost text-xl">Bistro Boss</Link>
+          <Link to="/" className="btn btn-ghost text-xl">
+            Bistro Boss
+          </Link>
         </div>
 
         <div className="navbar-center hidden lg:flex">
