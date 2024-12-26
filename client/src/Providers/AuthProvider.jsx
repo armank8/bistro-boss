@@ -29,7 +29,7 @@ export default function AuthProvider({ children }) {
   };
 
   // logout -> Password authentication
-  const logout = () => {
+  const logOut = () => {
     setLoading(true);
     return signOut(auth);
   };
@@ -53,7 +53,7 @@ export default function AuthProvider({ children }) {
     loading,
     createUser,
     signIn,
-    logout
+    logOut
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

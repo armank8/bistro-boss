@@ -1,6 +1,14 @@
+import { useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 const Navbar = () => {
+  const {user,logOut} = useContext(AuthContext);
+  const handleLogOut = ()=>{
+    logOut()
+    .then(()=>{})
+    .catch(error=>console.log(error))
+  }
   const menuOptions = (
     <>
       <li>
@@ -13,12 +21,15 @@ const Navbar = () => {
       <li>
         <Link to={`/order/salad`}>Order Food</Link>
       </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-      <li>
+      
+      {/* <li>
         <Link to="/signup">Signup</Link>
-      </li>
+      </li> */}
+      {
+        user ? 
+        <> <button onClick={handleLogOut} className="btn btn-ghost">Logout</button> </> :
+        <li><Link to="/login">Login</Link></li>
+      }
     </>
   );
   return (

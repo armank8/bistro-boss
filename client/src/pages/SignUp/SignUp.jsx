@@ -6,12 +6,24 @@ import authentication2 from "../../assets/others/authentication2.png";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-import { useState } from "react";
+import { Children, useContext, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { AuthContext } from "../../Providers/AuthProvider";
 
 export default function SignUp() {
+  const {createUser} = useContext(AuthContext);
   const [showPassword,setShowPassword] = useState(false);
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    // console.log(data)
+    createUser(data.email,data.password)
+    .then(result=>
+    {
+      const loggedUser = result.user;
+      // console.log(result);
+      console.log(loggedUser);
+    })
+  };
 
   // Old style
   //   const handleSignUp = (event) => {
@@ -25,6 +37,10 @@ export default function SignUp() {
   //   };
 
   return (
+    <>
+    <Helmet>
+            <title>Bistro Boss | Sign Up</title>
+    </Helmet>
     <div
       className="hero min-h-screen"
       style={{ backgroundImage: `url(${authBg})` }}
@@ -123,5 +139,6 @@ export default function SignUp() {
         </div>
       </div>
     </div>
+    </>
   );
 }
