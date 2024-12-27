@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from 'sweetalert2'
 
@@ -14,6 +14,9 @@ import { AuthContext } from "../../Providers/AuthProvider";
 export default function SignUp() {
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+
 
   const {
     register,
@@ -36,10 +39,11 @@ export default function SignUp() {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Your work has been saved",
+            title: "User created successfully",
             showConfirmButton: false,
             timer: 1500
           });
+          navigate('/');
         })
         .catch((error) => console.log(error));
     });

@@ -4,6 +4,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  console.log(user);
   const handleLogOut = () => {
     logOut()
       .then(() => {})
@@ -31,6 +32,7 @@ const Navbar = () => {
       </li> */}
       {user ? (
         <>
+        <span>{user.displayName}</span>
           <button onClick={handleLogOut} className="btn btn-ghost">
             Logout
           </button>
