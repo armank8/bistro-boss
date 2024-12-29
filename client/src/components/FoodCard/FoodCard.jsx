@@ -1,5 +1,10 @@
 export default function FoodCard({ item }) {
   const { _id, name, recipe, image, category, price } = item;
+  // Add to Cart
+  const handleAddToCart = (food) => {
+    console.log(food);
+  };
+  
   return (
     <div className="card  bg-slate-100 w-96 shadow-md">
       {/* <figure className="m-0 p-0"></figure> */}
@@ -14,7 +19,12 @@ export default function FoodCard({ item }) {
         <h2 className="card-title">{name}</h2>
         <p>{recipe}</p>
         <div className="card-actions justify-center">
-          <button className="btn btn-primary">Add To cart</button>
+          <button
+            onClick={() => handleAddToCart(item)}
+            className="btn btn-primary"
+          >
+            Add To cart
+          </button>
         </div>
       </div>
     </div>
