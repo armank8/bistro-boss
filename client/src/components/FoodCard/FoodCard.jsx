@@ -3,6 +3,7 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import axios from 'axios';
 
 export default function FoodCard({ item }) {
   const { _id, name, recipe, image, category, price } = item;
@@ -23,7 +24,18 @@ export default function FoodCard({ item }) {
         image,
         price,
       };
-      
+      axios.post("http://localhost:5000/carts",cartItem).then((res) => {
+        console.log(res.data);
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name} has been added to cart`,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      });
     } else {
       Swal.fire({
         title: "You are not logged in",
