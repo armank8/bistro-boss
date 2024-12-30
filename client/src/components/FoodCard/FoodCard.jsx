@@ -1,19 +1,29 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function FoodCard({ item }) {
   const { _id, name, recipe, image, category, price } = item;
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
-  console.log(user);
+  // console.log(user);
+
   // Add to Cart
   const handleAddToCart = (food) => {
-    console.log(food);
+    // console.log(food);
     if (user && user.email) {
       // TODO:  Send cart item to db
+      const cartItem = {
+        menuId: _id,
+        email: user.email,
+        name,
+        image,
+        price,
+      };
+      
     } else {
       Swal.fire({
         title: "You are not logged in",
@@ -25,7 +35,7 @@ export default function FoodCard({ item }) {
         confirmButtonText: "Yes, Login",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/login");
+          navigate("/login", { state: { from: location } });
         }
       });
     }

@@ -21,6 +21,7 @@ export default function Login() {
   const location = useLocation();
   const navigate = useNavigate();
   let from = location.state?.from?.pathname || "/";
+  console.log("State in the location", location.state);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -115,13 +116,14 @@ export default function Login() {
                   type="text"
                   placeholder="Enter the Captcha above"
                   className="input input-bordered"
-                  required
+                  
                 />
               </div>
               {/*submit btn  */}
               <div className="form-control mt-6">
+                {/* TODO: apply disable for re captcha  */}
                 <input
-                  disabled={disabled}
+                  disabled={false} //disabled
                   className="btn btn-primary"
                   type="submit"
                   value="Submit"
