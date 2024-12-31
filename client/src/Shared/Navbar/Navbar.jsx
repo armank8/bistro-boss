@@ -13,7 +13,7 @@ const Navbar = () => {
       .then(() => {})
       .catch((error) => console.log(error));
   };
-  const menuOptions = (
+  const navOptions = (
     <>
       <li>
         <Link to="/">Home</Link>
@@ -31,7 +31,7 @@ const Navbar = () => {
         <Link to="/secret">Secret</Link>
       </li>
       <li>
-        <Link to="">
+        <Link to="/dashboard/cart">
           <button className="btn hover:bg-slate-950 bg-slate-950 flex items-center text-white space-x-2 border-none">
             <FaShoppingCart />
             <div className="badge badge-secondary">+{cart.length}</div>
@@ -82,7 +82,7 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              {menuOptions}
+              {navOptions}
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
@@ -91,7 +91,7 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{menuOptions}</ul>
+          <ul className="menu menu-horizontal px-1">{navOptions}</ul>
         </div>
         {/* button */}
         <div className="navbar-end">
