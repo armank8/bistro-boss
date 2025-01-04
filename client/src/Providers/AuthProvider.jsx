@@ -14,6 +14,7 @@ export const AuthContext = createContext(null);
 const auth = getAuth(app);
 
 export default function AuthProvider({ children }) {
+  // console.log("auth", auth);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -61,7 +62,7 @@ export default function AuthProvider({ children }) {
     createUser,
     signIn,
     logOut,
-    updateUserProfile
+    updateUserProfile,
   };
   return (
     <AuthContext.Provider value={userInfo}>{children}</AuthContext.Provider>

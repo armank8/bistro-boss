@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 import authBg from "../../assets/others/authentication.png";
 import authentication2 from "../../assets/others/authentication2.png";
@@ -10,13 +10,13 @@ import { FaGithub } from "react-icons/fa";
 import { Children, useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 export default function SignUp() {
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
-
+  const axiosPublic = useAxiosPublic();
 
   const {
     register,
@@ -34,16 +34,25 @@ export default function SignUp() {
       console.log(loggedUser);
       updateUserProfile(data.name, data.photoURL)
         .then(() => {
-          console.log("User profile updated");
-          reset();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "User created successfully",
-            showConfirmButton: false,
-            timer: 1500
+          // Create user entry in the database- m68-1
+          const userInfo = {
+            name: data.name,
+            email: data.email,
+          };
+          axiosPublic.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log('user added to the DB');
+              reset();
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User created successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigate("/");
+            }
           });
-          navigate('/');
         })
         .catch((error) => console.log(error));
     });
