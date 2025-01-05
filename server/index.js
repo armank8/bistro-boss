@@ -49,18 +49,26 @@ async function run() {
       const result = await userCollection.find().toArray();
       res.send(result);
     });
-    // Get all Menu
+
+    app.delete("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    //  Menu  related apis
     app.get("/menu", async (req, res) => {
       const result = await menuCollection.find().toArray();
       res.send(result);
     });
-    // Get all reviews
+    // reviews related apis
     app.get("/reviews", async (req, res) => {
       const result = await reviewCollection.find().toArray();
       res.send(result);
     });
 
-    // carts Collection
+    // carts related apis
     app.get("/carts", async (req, res) => {
       const email = req.query.email;
       const query = { email: email };
