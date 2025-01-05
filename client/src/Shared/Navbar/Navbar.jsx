@@ -31,6 +31,9 @@ const Navbar = () => {
         <Link to="/secret">Secret</Link>
       </li>
       <li>
+        <Link to="/dashboard">dashboard</Link>
+      </li>
+      <li>
         <Link to="/dashboard/cart">
           <button className="btn hover:bg-slate-950 bg-slate-950 flex items-center text-white space-x-2 border-none">
             <FaShoppingCart />
