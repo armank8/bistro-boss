@@ -11,6 +11,7 @@ import { Children, useContext, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Providers/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 export default function SignUp() {
   const { createUser, updateUserProfile } = useContext(AuthContext);
@@ -184,7 +185,8 @@ export default function SignUp() {
                   </small>
                 </p>
               </Link>
-              <p>
+              <SocialLogin></SocialLogin>
+              {/* <p>
                 {" "}
                 <small>Or Sign Up with</small>
               </p>
@@ -192,7 +194,7 @@ export default function SignUp() {
                 <FcGoogle />
                 <FaFacebook />
                 <FaGithub />
-              </p>
+              </p> */}
             </div>
           </div>
           {/* Right */}

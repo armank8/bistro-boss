@@ -14,6 +14,7 @@ import { FaGithub } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 
 export default function Login() {
   const [disabled, setDisabled] = useState(true);
@@ -139,15 +140,17 @@ export default function Login() {
                   </small>
                 </p>
               </Link>
-              <p>
+              
+              <SocialLogin></SocialLogin>
+              {/* <p>
                 {" "}
                 <small>Or Sign in with</small>
-              </p>
-              <p className="flex justify-center space-x-6 py-2">
+              </p> */}
+              {/* <p className="flex justify-center space-x-6 py-2">
                 <FcGoogle />
                 <FaFacebook />
                 <FaGithub />
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
