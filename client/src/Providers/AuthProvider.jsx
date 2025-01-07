@@ -21,7 +21,7 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
-  const axiosPublic= useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
 
   // create user -> Password authentication
   const createUser = (email, password) => {
@@ -62,11 +62,21 @@ export default function AuthProvider({ children }) {
       console.log("current User", currentUser);
       if (currentUser) {
         // get token and store client
-
+        const userInfo = {
+          email: currentUser.email,
+        };
+        axiosPublic.post("/jwt",userInfo)
+        .then(res=>{
+          console.log(res.data.token);
+          if(res.data.token){
+            localStorage.setItem('access-token',res.data.token)
+          }
+        });
       } else {
         // TODO:remove token(if token stored in the client side:Local storage,caching, in memory)
+        localStorage.removeItem('access-token');
       }
-      
+
       setLoading(false);
     });
     return () => {
