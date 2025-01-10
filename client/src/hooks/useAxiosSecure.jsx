@@ -5,6 +5,7 @@ const axiosSecure = axios.create({
 });
 
 export default function useAxiosSecure() {
+  // request interceptor to add authorization header for every secure call to the api
   axiosSecure.interceptors.request.use(
     function (config) {
       const token = localStorage.getItem("access-token");
@@ -16,5 +17,18 @@ export default function useAxiosSecure() {
       return Promise.reject(error);
     }
   );
+
+  // intercepts 401 and 403 status
+  axiosSecure.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    (error) => {
+      const status = error.response.status;
+      console.log("status error in the interceptor", status);
+      return Promise.reject(error);
+    }
+  );
+
   return axiosSecure;
 }
