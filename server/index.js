@@ -63,22 +63,27 @@ async function run() {
       const result = await userCollection.find().toArray();
       res.send(result);
     });
+    app.get("/users/:id", verifyToken, async (req, res) => {
+      const id = req.params.id;
+      const result = await userCollection
+        .findOne({ _id: new ObjectId(id) });
+      res.send(result);
+    });
 
     app.get("/users/admin/:email", verifyToken, async (req, res) => {
       const email = req.params.email;
-      if(email !==req.decoded.email){
-        return res.status(403).send({message:'unauthorized access'});
+      if (email !== req.decoded.email) {
+        return res.status(403).send({ message: "unauthorized access" });
       }
 
-      const query={email:email}
+      const query = { email: email };
 
       const user = await userCollection.findOne(query);
       const admin = false;
-      if(user){
-        admin = user?.role ==='admin'
+      if (user) {
+        admin = user?.role === "admin";
       }
-      res.send({admin})
-
+      res.send({ admin });
     });
 
     // Create User
