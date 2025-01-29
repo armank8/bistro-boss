@@ -14,10 +14,10 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 export default function SignUp() {
+  const axiosPublic = useAxiosPublic();
   const { createUser, updateUserProfile } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const axiosPublic = useAxiosPublic();
 
   const {
     register,

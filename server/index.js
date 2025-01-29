@@ -42,16 +42,17 @@ async function run() {
     });
 
     // middlewares
+    // verify token
     const verifyToken = (req, res, next) => {
-      console.log("inside verify token", req.headers.authorization);
+      // console.log("inside verify token", req.headers.authorization);
       if (!req.headers.authorization) {
-        return res.status(401).send({ message: "forbidden access" });
+        return res.status(401).send({ message: "unauthorized access" });
       }
       const token = req.headers.authorization.split(" ")[1];
 
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
         if (err) {
-          return res.status(401).send({ message: "forbidden access" });
+          return res.status(401).send({ message: "unauthorized access" });
         }
         req.decoded = decoded;
         next();
@@ -59,10 +60,12 @@ async function run() {
     };
 
     // Users related apis
+    // get all users
     app.get("/users", verifyToken, async (req, res) => {
       const result = await userCollection.find().toArray();
       res.send(result);
     });
+    // get a user by id
     app.get("/users/:id", verifyToken, async (req, res) => {
       const id = req.params.id;
       const result = await userCollection
@@ -70,23 +73,25 @@ async function run() {
       res.send(result);
     });
 
+    // verify if a user is an admin
     app.get("/users/admin/:email", verifyToken, async (req, res) => {
       const email = req.params.email;
+      
       if (email !== req.decoded.email) {
-        return res.status(403).send({ message: "unauthorized access" });
+        return res.status(403).send({ message: "forbidden access" });
       }
 
       const query = { email: email };
 
       const user = await userCollection.findOne(query);
-      const admin = false;
+      let admin = false;
       if (user) {
         admin = user?.role === "admin";
       }
       res.send({ admin });
     });
 
-    // Create User
+    // POST : Create User
     app.post("/users", async (req, res) => {
       const user = req.body;
       // Insert email if user doesn't exists:
