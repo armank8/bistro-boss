@@ -3,6 +3,7 @@ import SectionHeader from "../../../components/SectionHeader/SectionHeader"
 import { FaUtensils } from "react-icons/fa"
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 //imgbb was showing errors
 // imgbb credentials
@@ -16,7 +17,7 @@ const cloudinaryApi = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload
 
 
 const AddItems = () => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit,reset } = useForm();
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
 
@@ -35,7 +36,7 @@ const AddItems = () => {
         });
         if (res.data.secure_url) {
             // now send the menu item data to the server with the image 
-            console.log(res.data.secure_url);
+            // console.log(res.data.secure_url);
             const menuItem = {
                 name: data.name,
                 category: data.category,
@@ -48,7 +49,15 @@ const AddItems = () => {
             console.log(menuRes.data);
             if(menuRes.data.insertedId){
                 // show success popup
-                
+                reset();
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: `${data.name} is added to the menu`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+
             }
         }
     }
