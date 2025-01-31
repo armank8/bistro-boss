@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form"
 import SectionHeader from "../../../components/SectionHeader/SectionHeader"
 import { FaUtensils } from "react-icons/fa"
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 //imgbb was showing errors
 // imgbb credentials
@@ -10,13 +11,14 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 // cloudinary credentials
 const cloudName = "drnbidwis";
-const uploadPreset = "react-img";
+const uploadPreset = "bistro-boss-img";
 const cloudinaryApi = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
 
 const AddItems = () => {
     const { register, handleSubmit } = useForm();
     const axiosPublic = useAxiosPublic();
+    const axiosSecure = useAxiosSecure();
 
     const onSubmit = async (data) => {
         console.log(data);
@@ -24,14 +26,31 @@ const AddItems = () => {
         // const imageFile = { image: data.image[0] };
         const formData = new FormData();
         formData.append('file', data.image[0]);
-        formData.append('upload_preset',uploadPreset);
+        formData.append('upload_preset', uploadPreset);
 
         const res = await axiosPublic.post(cloudinaryApi, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        console.log(res.data);
+        if (res.data.secure_url) {
+            // now send the menu item data to the server with the image 
+            console.log(res.data.secure_url);
+            const menuItem = {
+                name: data.name,
+                category: data.category,
+                price: parseFloat(data.price),
+                recipe: data.recipe,
+                image: res.data.secure_url
+            }
+            // 
+            const menuRes = await axiosSecure.post('/menu', menuItem);
+            console.log(menuRes.data);
+            if(menuRes.data.insertedId){
+                // show success popup
+                
+            }
+        }
     }
     return (
         <div>
