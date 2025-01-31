@@ -12,8 +12,9 @@ const uploadPreset = "bistro-boss-img";
 const cloudinaryApi = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
 const UpdateItem = () => {
-    const item = useLoaderData();
-    console.log(item);
+    const { name, category, image, recipe, price,_id } = useLoaderData();
+    // const item = useLoaderData();
+    // console.log(item);
     const { register, handleSubmit, reset } = useForm();
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure();
@@ -43,15 +44,15 @@ const UpdateItem = () => {
                 image: res.data.secure_url
             }
             // 
-            const menuRes = await axiosSecure.post('/menu', menuItem);
+            const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
             console.log(menuRes.data);
-            if (menuRes.data.insertedId) {
+            if (menuRes.data.modifiedCount>0) {
                 // show success popup
-                reset();
+                // reset();
                 Swal.fire({
                     position: "top-end",
                     icon: "success",
-                    title: `${data.name} is added to the menu`,
+                    title: `${data.name} is updated to the menu`,
                     showConfirmButton: false,
                     timer: 1500
                 });
@@ -70,7 +71,7 @@ const UpdateItem = () => {
                         <div className="label">
                             <span className="label-text">Recipe Name*</span>
                         </div>
-                        <input type="text" {...register("name", { required: true })} placeholder="Recipe Name" className="input input-bordered w-full" />
+                        <input type="text" defaultValue={name} {...register("name", { required: true })} placeholder="Recipe Name" className="input input-bordered w-full" />
                     </div>
 
                     <div className="flex gap-6">
@@ -79,7 +80,7 @@ const UpdateItem = () => {
                             <div className="label">
                                 <span className="label-text">Category*</span>
                             </div>
-                            <select defaultValue="default"  {...register("category", { required: true })} className="select select-bordered w-full">
+                            <select defaultValue={category}  {...register("category", { required: true })} className="select select-bordered w-full">
                                 <option disabled value="default">Select a category</option>
                                 <option value="salad">Salad</option>
                                 <option value="pizza">Pizza</option>
@@ -93,7 +94,7 @@ const UpdateItem = () => {
                             <div className="label">
                                 <span className="label-text">Price*</span>
                             </div>
-                            <input type="number" {...register("price", { required: true })} placeholder="Price" className="input input-bordered w-full" />
+                            <input type="number" defaultValue={price} {...register("price", { required: true })} placeholder="Price" className="input input-bordered w-full" />
                         </div>
                     </div>
 
@@ -103,7 +104,7 @@ const UpdateItem = () => {
                             <div className="label">
                                 <span className="label-text">Recipe Details</span>
                             </div>
-                            <textarea {...register('recipe')} className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
+                            <textarea defaultValue={recipe} {...register('recipe')} className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
                         </label>
                     </div>
 
@@ -112,8 +113,8 @@ const UpdateItem = () => {
                         <input {...register('image', { required: true })} type="file" className="file-input w-full max-w-xs" />
                     </div>
 
-                    <button className="btn" type="submit">
-                        Add Items <FaUtensils className="ml-4"></FaUtensils>
+                    <button className="btn bg-yellow-300" type="submit">
+                        Update menu Item <FaUtensils className="ml-4"></FaUtensils>
                     </button>
                 </form>
             </div>
