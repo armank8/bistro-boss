@@ -222,6 +222,7 @@ async function run() {
         console.log('Invalid price value');
         return res.status(400).json({ error: "Invalid price value" });
       }
+
       const amount = parseInt(price*100);
 
       const paymentIntent = await stripe.paymentIntents.create({
@@ -248,6 +249,17 @@ async function run() {
       const deleteResult = await cartCollection.deleteMany(query);
 
       res.send({ paymentResult, deleteResult });
+    })
+
+    app.get('/payments/:email',verifyToken, async(req,res)=>{
+      const query = {email:req.params.email};
+      
+      if(req.params.email !== req.decoded.email){
+        return res.status(403).send({message:'forbidden access'});
+      }
+
+      const result = await paymentCollection.find(query).toArray();
+      res.send(result);
     })
 
     // ---------------------------------------
