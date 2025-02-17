@@ -32,6 +32,7 @@ async function run() {
     const menuCollection = client.db("bistro-boss").collection("menu");
     const reviewCollection = client.db("bistro-boss").collection("reviews");
     const cartCollection = client.db("bistro-boss").collection("carts");
+    const paymentCollection = client.db("bistro-boss").collection("payments");
 
     // jwt related apis
     app.post("/jwt", async (req, res) => {
@@ -216,6 +217,11 @@ async function run() {
     // stripe payment intent
     app.post('/create-payment-intent',async(req,res)=>{
       const {price} = req.body;
+
+      if (!price || isNaN(price)) {
+        console.log('Invalid price value');
+        return res.status(400).json({ error: "Invalid price value" });
+      }
       const amount = parseInt(price*100);
 
       const paymentIntent = await stripe.paymentIntents.create({
@@ -226,10 +232,23 @@ async function run() {
       res.send({
         clientSecret:paymentIntent.client_secret
       })
-
-
     })
 
+    // make payment
+    app.post('/payments',async(req,res)=>{
+      const payment = req.body;
+      const paymentResult = await paymentCollection.insertOne(payment);
+
+      // carefully delete each item from the cart
+      console.log('payment info',payment);
+      const query ={_id:{
+        $in:payment.cartIds.map(id => new ObjectId(id))
+      }};
+
+      const deleteResult = await cartCollection.deleteMany(query);
+
+      res.send({ paymentResult, deleteResult });
+    })
 
     // ---------------------------------------
     // Send a ping to confirm a successful connection
