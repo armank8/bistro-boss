@@ -3,33 +3,36 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../../hooks/useCart";
+import useAdmin from "../../hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [isAdmin] = useAdmin();
   const [cart] = useCart();
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => { })
       .catch((error) => console.log(error));
   };
   const navOptions = (
     <>
-      <li>
-        <Link to="/">Home</Link>
-      </li>
+      <li><Link to="/">Home</Link></li>
 
-      <li>
-        <Link to="/menu">Menu</Link>
-      </li>
+      <li><Link to="/menu">Menu</Link></li>
 
-      <li>
-        <Link to={`/order/salad`}>Order Food</Link>
-      </li>
+      <li><Link to={`/order/salad`}>Order Food</Link></li>
 
-      <li>
-        <Link to="/secret">Secret</Link>
-      </li>
+      <li><Link to="/secret">Secret</Link></li>
+
+      {
+        user && isAdmin && <li><Link to={`/dashboard/adminHome`}>Dashboard</Link></li>
+      }
+
+      {
+        user && !isAdmin && <li><Link to={`/dashboard/userHome`}>User Home</Link></li>
+      }
+
       <li>
         <Link to="/dashboard">dashboard</Link>
       </li>
