@@ -69,14 +69,16 @@ export default function AuthProvider({ children }) {
           // console.log(res.data.token);
           if (res.data.token) {
             localStorage.setItem("access-token", res.data.token);
+            setLoading(false);
           }
         });
       } else {
         // TODO:remove token(if token stored in the client side:Local storage,caching, in memory)
         localStorage.removeItem("access-token");
+        setLoading(false);
       }
 
-      setLoading(false);
+      // setLoading(false);
     });
     return () => {
       return unsubscribe();
