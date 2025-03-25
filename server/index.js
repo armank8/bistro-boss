@@ -26,7 +26,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
     const userCollection = client.db("bistro-boss").collection("users");
     const menuCollection = client.db("bistro-boss").collection("menu");
@@ -263,7 +263,7 @@ async function run() {
     })
 
     // stats or analytics
-    app.get('/admin-stats', verifyToken, verifyAdmin, async(req,res)=>{
+    app.get('/admin-stats',  verifyToken, verifyAdmin, async(req,res)=>{
       const users = await userCollection.estimatedDocumentCount();
       const menuItems = await menuCollection.estimatedDocumentCount();
       const orders = await paymentCollection.estimatedDocumentCount();
@@ -288,14 +288,26 @@ async function run() {
       res.send({
         users, menuItems, orders, revenue 
       })
+    });
+
+    // using aggregation pipeline
+    app.get('/order-stats',async(req,res)=>{
+      const result = await paymentCollection.aggregate([
+
+      ]).toArray();
+
+      res.send({result});
+
     })
 
     // ---------------------------------------
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
+    
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
